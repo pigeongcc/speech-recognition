@@ -1,0 +1,2 @@
+- Для построения спектрограций: torchaudio.transforms
+- Для аугментаций: kaldi. torchaudio имеет привязку к kaldi. Хорошие аугментации: SpecAug, Cutout
