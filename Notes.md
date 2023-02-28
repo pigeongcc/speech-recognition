@@ -1,3 +1,4 @@
 - Для построения спектрограций: torchaudio.transforms
 - Для аугментаций: kaldi. torchaudio имеет привязку к kaldi. Хорошие аугментации: SpecAug, Cutout
 - Ещё один тутор, по нашему датасету SpeechCommands (включает downsampling до 8 кГц): https://pytorch.org/tutorials/intermediate/speech_command_classification_with_torchaudio_tutorial.html#define-the-network
+- несколько вариантов по архитектуре + описание работы модели: https://nvidia.github.io/OpenSeq2Seq/html/speech-recognition/deepspeech2.html
