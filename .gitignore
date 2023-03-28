@@ -1,9 +1,11 @@
 # Dataset files
 data
+data.zip
 speech_commands_v0.01.tar.gz
 
 # Model serialization files
 models
+models.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
