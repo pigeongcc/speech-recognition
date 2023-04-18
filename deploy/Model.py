@@ -25,7 +25,7 @@ class Model():
     def _load_model(self, model_dir: str):
 
         def _get_model_paths(model_dir):
-            experiment_name = model_dir.split('/', maxsplit=1)[-1]
+            experiment_name = model_dir.rsplit('/', maxsplit=1)[-1]
             model_path = f'{model_dir}/{experiment_name}.pth'
             hparams_path = f'{model_dir}/{experiment_name}.json'
             return experiment_name, model_path, hparams_path

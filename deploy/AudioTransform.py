@@ -18,8 +18,16 @@ class AudioTransform:
         self.valid_audio_transforms = torchaudio.transforms.MelSpectrogram()
     
     def _load_audio(self, audio_path: str):
-        _audio_path, format = audio_path.split('.', maxsplit=1)
+        print(audio_path)
+        _audio_path, format = audio_path.rsplit('.', maxsplit=1)
         flac_audio_path = _audio_path + ".flac"
+
+        import os
+        print()
+        files = [f for f in os.listdir('.') if os.path.isfile(f)]
+        for f in files:
+            print(f)
+        print()
 
         audio = AudioSegment.from_file(audio_path, format)
         audio = audio.set_frame_rate(16000)
