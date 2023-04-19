@@ -17,19 +17,25 @@ class AudioTransform:
         )
         self.valid_audio_transforms = torchaudio.transforms.MelSpectrogram()
     
-    def _load_audio(self, audio_path: str):
-        print(audio_path)
-        _audio_path, format = audio_path.rsplit('.', maxsplit=1)
-        flac_audio_path = _audio_path + ".flac"
+    def _load_audio(self, audio):
 
-        import os
-        print()
-        files = [f for f in os.listdir('.') if os.path.isfile(f)]
-        for f in files:
-            print(f)
-        print()
+        if type(audio) == str:
+            # audio is path to an audio file
+            # print(audio)
+            _audio_path, format = audio.rsplit('.', maxsplit=1)
+            flac_audio_path = _audio_path + ".flac"
+            audio = AudioSegment.from_file(audio, format)
+        elif type(audio) == AudioSegment:
+            # audio is an object with audio
+            flac_audio_path = "audio.flac"
 
-        audio = AudioSegment.from_file(audio_path, format)
+        # import os
+        # print()
+        # files = [f for f in os.listdir('.') if os.path.isfile(f)]
+        # for f in files:
+        #     print(f)
+        # print()
+
         audio = audio.set_frame_rate(16000)
         audio = audio.set_channels(1)
         audio.export(flac_audio_path, format="flac")
@@ -71,10 +77,10 @@ class AudioTransform:
 
         return spectrograms, labels, input_lengths, label_lengths
     
-    def transform(self, audio_path: str):
+    def transform(self, audio):
         device, _ = get_device()
 
-        audio_sample = self._load_audio(audio_path)
+        audio_sample = self._load_audio(audio)
         spectrogram, label, input_length, label_length = self._data_processing((audio_sample,))
         spectrogram, label = spectrogram.to(device), label.to(device)
 

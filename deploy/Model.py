@@ -1,5 +1,6 @@
 import json
 import torch
+import pickle
 # from ctcdecode import CTCBeamDecoder
 
 from SpeechRecognitionModel.SpeechRecognitionModel import SpeechRecognitionModel
@@ -50,10 +51,11 @@ class Model():
         return model, hparams
 
     def recognize(self,
-                  audio_path: str,
+                  audio = None,
                   collapse_repeated: bool = True,):
-
-        spectrogram, label, input_length, label_length = self.audio_transform.transform(audio_path)
+        
+        audio = pickle.load(audio)
+        spectrogram, label, input_length, label_length = self.audio_transform.transform(audio)
 
         output = self.model(spectrogram)
 
