@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, session
 # from flask_restful import Resource, Api
 # from flask_cors import CORS
 from Model import Model
@@ -19,7 +19,7 @@ model = Model(MODEL_DIR)
 
 @app.route('/speech-recognition/', methods=['POST'])
 def post():
-    print("hi")
+    session.permanent = True
     audio_file = request.files['audio_file']
     print(audio_file)
     recognition = model.recognize(audio=audio_file)
