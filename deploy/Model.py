@@ -46,7 +46,7 @@ class Model():
             hparams['n_class'], hparams['n_feats'], hparams['stride'], hparams['dropout']
             ).to(device)
 
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load(model_path, map_location=device))
 
         return model, hparams
 
