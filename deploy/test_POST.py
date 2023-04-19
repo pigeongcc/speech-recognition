@@ -14,6 +14,7 @@ audio_path = "/home/pigeon_gcc/Desktop/speech-recognition/data/Iskander/flac/100
 audio_file = load_audio_file(audio_path)
 audio_file = pickle.dumps(audio_file)
 
-response = requests.post('http://127.0.0.1:5000/speech-recognition/', files={'audio_file': audio_file})
+# response = requests.post('http://127.0.0.1:5000/speech-recognition/', files={'audio_file': audio_file})
+response = requests.post('http://185.188.183.103:5000/speech-recognition/', files={'audio_file': audio_file})
 
 print(response.text)
