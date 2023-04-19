@@ -13,7 +13,8 @@ app = Flask(__name__)
 # api = Api(app)
 
 # load the speech recognition model
-MODEL_DIR = "../models/asr-lch-optim:adamw-scheduler:oncecycle-data:full-epochs:30"
+# MODEL_DIR = "../models/asr-lch-optim:adamw-scheduler:oncecycle-data:full-epochs:30"
+MODEL_DIR = "../models/kaggle-epochs_14-rnn_type_LSTM-rnn_dim_512-n_rnn_layers_5-n_cnn_layers_3"
 model = Model(MODEL_DIR)
 
 @app.route('/speech-recognition/', methods=['POST'])
