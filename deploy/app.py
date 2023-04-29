@@ -6,8 +6,6 @@ from Model import Model
 
 # create a Flask instance
 app = Flask(__name__)
-app.secret_key = 'super secret key'
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Cross Origin Resource Sharing
 # CORS(app)
@@ -25,7 +23,6 @@ cors = CORS(app, resources={r"/speech-recognition": {"origins": "http://localhos
 @cross_origin(origin='localhost', headers=['Content-Type'])
 def post():
     session.permanent = True
-    
     audio_file = request.files['audio_file']
     print(audio_file)
     recognition = model.recognize(audio=audio_file)
@@ -36,8 +33,4 @@ def post():
 
 
 if __name__ == '__main__':
-    # app.config['SESSION_TYPE'] = 'filesystem'
-
-    session.init_app(app)
-
     app.run(debug=True)

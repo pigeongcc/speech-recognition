@@ -3,9 +3,6 @@ conda activate asr_project_min
 
 cd /root/speech-recognition/deploy
 
-flask_pid=$(pstree -p | grep -P -o 'flask\([0-9]+\)' | grep -o '[0-9]\+')
-kill -9 $flask_pid
+flask run --host=185.188.183.103 &
 
-nohup flask run --host=185.188.183.103 &
-
-# disown -h %1
+disown
