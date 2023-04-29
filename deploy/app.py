@@ -1,12 +1,13 @@
 from flask import Flask, request, session
 # from flask_restful import Resource, Api
-# from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from Model import Model
 
 
 # create a Flask instance
 app = Flask(__name__)
 app.secret_key = 'super secret key'
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Cross Origin Resource Sharing
 # CORS(app)
@@ -18,7 +19,10 @@ app.secret_key = 'super secret key'
 MODEL_DIR = "../models/kaggle-epochs_14-rnn_type_LSTM-rnn_dim_512-n_rnn_layers_5-n_cnn_layers_3"
 model = Model(MODEL_DIR)
 
+cors = CORS(app, resources={r"/speech-recognition": {"origins": "http://localhost:5000"}})
+
 @app.route('/speech-recognition/', methods=['POST'])
+@cross_origin(origin='localhost', headers=['Content-Type'])
 def post():
     session.permanent = True
     
