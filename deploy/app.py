@@ -21,6 +21,7 @@ model = Model(MODEL_DIR)
 @app.route('/speech-recognition/', methods=['POST'])
 def post():
     session.permanent = True
+    
     audio_file = request.files['audio_file']
     print(audio_file)
     recognition = model.recognize(audio=audio_file)
@@ -31,4 +32,8 @@ def post():
 
 
 if __name__ == '__main__':
+    # app.config['SESSION_TYPE'] = 'filesystem'
+
+    session.init_app(app)
+
     app.run(debug=True)
