@@ -57,9 +57,9 @@ class Model():
         
         #audio = pickle.load(audio)
         print(type(audio))
-        audio.save(audio.filename)
 
-        audio_path = audio.filename
+        audio_path = 'audio/' + audio.filename
+        audio.save(audio_path)
 
         spectrogram, label, input_length, label_length = self.audio_transform.transform(audio_path)
 

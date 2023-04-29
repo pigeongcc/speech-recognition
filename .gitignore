@@ -8,6 +8,8 @@ other
 server.txt
 deploy/audio.flac
 model_sc.ipynb
+deploy/audio
+deploy/nohup.out
 
 # Libraries files
 libs

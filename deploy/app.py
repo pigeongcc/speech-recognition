@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, session
 # from flask_restful import Resource, Api
 # from flask_cors import CORS
 from Model import Model
@@ -6,6 +6,7 @@ from Model import Model
 
 # create a Flask instance
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 
 # Cross Origin Resource Sharing
 # CORS(app)
@@ -19,7 +20,8 @@ model = Model(MODEL_DIR)
 
 @app.route('/speech-recognition/', methods=['POST'])
 def post():
-    print("hi")
+    session.permanent = True
+    
     audio_file = request.files['audio_file']
     print(audio_file)
     recognition = model.recognize(audio=audio_file)
@@ -30,4 +32,8 @@ def post():
 
 
 if __name__ == '__main__':
+    # app.config['SESSION_TYPE'] = 'filesystem'
+
+    session.init_app(app)
+
     app.run(debug=True)
