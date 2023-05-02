@@ -4,7 +4,10 @@ data.zip
 speech_commands_v0.01.tar.gz
 
 # other files
+other
 server.txt
+deploy/audio.flac
+model_sc.ipynb
 deploy/audio
 deploy/nohup.out
 
