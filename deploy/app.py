@@ -1,39 +1,54 @@
-from flask import Flask, request, session
-# from flask_restful import Resource, Api
-# from flask_cors import CORS
+from flask import Flask, request, session, jsonify, make_response
+from flask_cors import CORS, cross_origin
 from Model import Model
 
+
+# load the speech recognition model
+MODEL_DIR = "../models/kaggle-epochs_14-rnn_type_LSTM-rnn_dim_512-n_rnn_layers_5-n_cnn_layers_3"
+model = Model(MODEL_DIR)
 
 # create a Flask instance
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
 # Cross Origin Resource Sharing
-# CORS(app)
-# create an API object
-# api = Api(app)
+CORS(app)
 
-# load the speech recognition model
-# MODEL_DIR = "../models/asr-lch-optim:adamw-scheduler:oncecycle-data:full-epochs:30"
-MODEL_DIR = "../models/kaggle-epochs_14-rnn_type_LSTM-rnn_dim_512-n_rnn_layers_5-n_cnn_layers_3"
-model = Model(MODEL_DIR)
 
-@app.route('/speech-recognition/', methods=['POST'])
+# method for CORS preflight request
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+
+# method for CORSification of response with a recognition
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
+# @cross_origin(origin='localhost', headers=['Content-Type'])
+@app.route('/speech-recognition/', methods=['POST', 'OPTION'])
 def post():
     session.permanent = True
-    
-    audio_file = request.files['audio_file']
-    print(audio_file)
-    recognition = model.recognize(audio=audio_file)
-    return recognition
 
+    if request.method == "OPTIONS":
+        # CORS preflight
+        return _build_cors_preflight_response()
 
-# api.add_resource(SpeechRecognition, '/speech-recognition/<string:audio_path>')
+    elif request.method == "POST":
+        # the actual request following the preflight
+        audio_file = request.files['audio_file']
+        print(audio_file)
+        recognition = model.recognize(audio=audio_file)
+        # return recognition
+        return _corsify_actual_response(jsonify(recognition))
 
 
 if __name__ == '__main__':
-    # app.config['SESSION_TYPE'] = 'filesystem'
-
     session.init_app(app)
 
     app.run(debug=True)
